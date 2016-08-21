@@ -4,6 +4,8 @@
  */
 package com.vektorel.rehber.rehber.gui;
 
+import com.vektorel.rehber.db.KullaniciIslemleri;
+import com.vektorel.rehber.db.TException;
 import com.vektorel.rehber.util.DosyaIslemleri;
 import com.vektorel.rehber.util.FileEnum;
 import javax.swing.JOptionPane;
@@ -108,25 +110,38 @@ public class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIptalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIptalActionPerformed
-      System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnIptalActionPerformed
 
     private void btnGirisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGirisActionPerformed
-        DosyaIslemleri dosyaIslemleri =new DosyaIslemleri();
-        String sifre = dosyaIslemleri.propertiesDosyasiOku(FileEnum.KULLANICILAR, txtKullaniciAdi.getText());
-        
-        if(sifre!=null && txtSifre.getText().equals(sifre)){
-            frmRehber rehber=new frmRehber();
-            rehber.setLocationRelativeTo(null);
-            rehber.show();
-            this.dispose();
-        }else{
-             JOptionPane.showMessageDialog(rootPane, "Kullanıcı Adı Şifre Hatalı");
+//        DosyaIslemleri dosyaIslemleri =new DosyaIslemleri();
+//        String sifre = dosyaIslemleri.propertiesDosyasiOku(FileEnum.KULLANICILAR, txtKullaniciAdi.getText());
+//        
+//        if(sifre!=null && txtSifre.getText().equals(sifre)){
+//            frmRehber rehber=new frmRehber();
+//            rehber.setLocationRelativeTo(null);
+//            rehber.show();
+//            this.dispose();
+//        }else{
+//             JOptionPane.showMessageDialog(rootPane, "Kullanıcı Adı Şifre Hatalı");
+//        }
+        try {
+
+            KullaniciIslemleri kullaniciIslemleri = new KullaniciIslemleri();
+            if (kullaniciIslemleri.getir(txtKullaniciAdi.getText(), txtSifre.getText())) {
+                frmRehber rehber = new frmRehber();
+                rehber.setLocationRelativeTo(null);
+                rehber.show();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Kullanıcı Adı Şifre Hatalı");
+            }
+        } catch (TException e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMesaj(),"HATA",1);
         }
-        
+
+
     }//GEN-LAST:event_btnGirisActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGiris;
     private javax.swing.JButton btnIptal;
