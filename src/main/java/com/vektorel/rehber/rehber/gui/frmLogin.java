@@ -4,10 +4,8 @@
  */
 package com.vektorel.rehber.rehber.gui;
 
-import com.vektorel.rehber.db.KullaniciIslemleri;
+import com.vektorel.rehber.db.KullaniciService;
 import com.vektorel.rehber.db.TException;
-import com.vektorel.rehber.util.DosyaIslemleri;
-import com.vektorel.rehber.util.FileEnum;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +19,8 @@ public class frmLogin extends javax.swing.JFrame {
      */
     public frmLogin() {
         initComponents();
+        txtKullaniciAdi.setText("t");
+        txtSifre.setText("t");
     }
 
     /**
@@ -41,6 +41,7 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         btnGiris.setText("Giriş");
         btnGiris.addActionListener(new java.awt.event.ActionListener() {
@@ -127,9 +128,9 @@ public class frmLogin extends javax.swing.JFrame {
 //        }
         try {
 
-            KullaniciIslemleri kullaniciIslemleri = new KullaniciIslemleri();
+            KullaniciService kullaniciIslemleri = new KullaniciService();
             if (kullaniciIslemleri.getir(txtKullaniciAdi.getText(), txtSifre.getText())) {
-                frmRehber rehber = new frmRehber();
+                frmRehber rehber = new frmRehber(txtKullaniciAdi.getText());
                 rehber.setLocationRelativeTo(null);
                 rehber.show();
                 this.dispose();
